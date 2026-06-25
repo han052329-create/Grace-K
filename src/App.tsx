@@ -48,6 +48,9 @@ export default function App() {
   // My Bookings Dropdown State
   const [showMyBookings, setShowMyBookings] = useState(false);
 
+  // Cancellations confirmation state
+  const [confirmingCancelId, setConfirmingCancelId] = useState<string | null>(null);
+
   // Mobile Menu State
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -263,22 +266,50 @@ export default function App() {
                         <p className="text-center py-6 text-xs text-[#cfc5bb]">등록된 예약 내역이 없습니다.</p>
                       ) : (
                         bookings.map((b) => (
-                          <div key={b.id} className="rounded-lg bg-[#fbf8f5] p-3 text-xs border border-[#cfc5bb]/10 relative group">
-                            <button
-                              onClick={() => handleCancelBooking(b.id)}
-                              className="absolute top-2.5 right-2.5 opacity-0 group-hover:opacity-100 text-rose-500 hover:text-rose-700 p-1 rounded hover:bg-rose-50 transition-all cursor-pointer"
-                              title="예약 취소"
-                            >
-                              <Trash2 className="h-3.5 w-3.5" />
-                            </button>
-                            <p className="font-bold text-[#1b1c1b] truncate max-w-[85%]">{b.serviceName}</p>
-                            <p className="text-[#695c52] mt-1 font-medium">{b.date} / {b.time}</p>
-                            <div className="flex items-center justify-between mt-2 text-[10px] text-[#cfc5bb]">
-                              <span>예약자: {b.customerName}님</span>
-                              <span className="bg-[#ede0d3] text-[#50453b] px-1.5 py-0.5 rounded font-semibold text-[9px]">
-                                예약 확정
-                              </span>
-                            </div>
+                          <div key={b.id} className="rounded-lg bg-[#fbf8f5] p-3 text-xs border border-[#cfc5bb]/15 relative min-h-[85px] flex flex-col justify-between">
+                            {confirmingCancelId === b.id ? (
+                              <div className="flex flex-col items-center justify-center py-1.5 h-full space-y-2">
+                                <p className="font-bold text-rose-600 text-center text-[11px]">예약을 취소하시겠습니까?</p>
+                                <div className="flex gap-2 w-full justify-center">
+                                  <button
+                                    onClick={() => {
+                                      const updated = bookings.filter((x) => x.id !== b.id);
+                                      setBookings(updated);
+                                      localStorage.setItem('grace_k_bookings', JSON.stringify(updated));
+                                      triggerToast('🗑️ 예약이 안전하게 취소되었습니다.');
+                                      setConfirmingCancelId(null);
+                                    }}
+                                    className="px-3 py-1 bg-rose-500 text-white rounded-md text-[10px] font-bold hover:bg-rose-600 transition-colors cursor-pointer"
+                                  >
+                                    예, 취소합니다
+                                  </button>
+                                  <button
+                                    onClick={() => setConfirmingCancelId(null)}
+                                    className="px-3 py-1 bg-[#ede0d3] text-[#50453b] rounded-md text-[10px] font-bold hover:bg-[#ede0d3]/80 transition-colors cursor-pointer"
+                                  >
+                                    아니오
+                                  </button>
+                                </div>
+                              </div>
+                            ) : (
+                              <>
+                                <button
+                                  onClick={() => setConfirmingCancelId(b.id)}
+                                  className="absolute top-2.5 right-2.5 text-rose-500 hover:text-rose-700 p-1.5 rounded hover:bg-rose-50 transition-all cursor-pointer"
+                                  title="예약 취소"
+                                >
+                                  <Trash2 className="h-3.5 w-3.5" />
+                                </button>
+                                <p className="font-bold text-[#1b1c1b] truncate max-w-[80%]">{b.serviceName}</p>
+                                <p className="text-[#695c52] mt-1 font-medium">{b.date} / {b.time}</p>
+                                <div className="flex items-center justify-between mt-2 text-[10px] text-[#cfc5bb]">
+                                  <span>예약자: {b.customerName}님</span>
+                                  <span className="bg-[#ede0d3] text-[#50453b] px-1.5 py-0.5 rounded font-semibold text-[9px]">
+                                    예약 확정
+                                  </span>
+                                </div>
+                              </>
+                            )}
                           </div>
                         ))
                       )}
@@ -359,19 +390,47 @@ export default function App() {
                 {bookings.length > 0 && (
                   <div className="border-t border-[#cfc5bb]/20 pt-4">
                     <p className="text-xs font-bold text-[#695c52] mb-2">📅 예약 예정 ({bookings.length}건)</p>
-                    <div className="space-y-2 max-h-32 overflow-y-auto">
+                    <div className="space-y-2 max-h-36 overflow-y-auto">
                       {bookings.map((b) => (
-                        <div key={b.id} className="flex justify-between items-center text-xs bg-white p-2.5 rounded-lg border border-[#cfc5bb]/20">
-                          <div>
-                            <p className="font-semibold text-[#1b1c1b]">{b.serviceName}</p>
-                            <p className="text-[10px] text-[#695c52]">{b.date} / {b.time}</p>
-                          </div>
-                          <button
-                            onClick={() => handleCancelBooking(b.id)}
-                            className="text-rose-500 hover:text-rose-700 text-[10px] underline font-medium cursor-pointer"
-                          >
-                            취소
-                          </button>
+                        <div key={b.id} className="bg-white p-2.5 rounded-lg border border-[#cfc5bb]/20 min-h-[55px] flex flex-col justify-center">
+                          {confirmingCancelId === b.id ? (
+                            <div className="flex flex-col items-center justify-center py-1 space-y-1.5">
+                              <p className="text-[10px] font-bold text-rose-600 text-center">예약을 취소하시겠습니까?</p>
+                              <div className="flex gap-2">
+                                <button
+                                  onClick={() => {
+                                    const updated = bookings.filter((x) => x.id !== b.id);
+                                    setBookings(updated);
+                                    localStorage.setItem('grace_k_bookings', JSON.stringify(updated));
+                                    triggerToast('🗑️ 예약이 취소되었습니다.');
+                                    setConfirmingCancelId(null);
+                                  }}
+                                  className="px-2.5 py-0.5 bg-rose-500 text-white rounded text-[9px] font-bold hover:bg-rose-600 transition-colors cursor-pointer"
+                                >
+                                  네
+                                </button>
+                                <button
+                                  onClick={() => setConfirmingCancelId(null)}
+                                  className="px-2.5 py-0.5 bg-[#ede0d3] text-[#50453b] rounded text-[9px] font-bold hover:bg-[#ede0d3]/80 transition-colors cursor-pointer"
+                                >
+                                  아니오
+                                </button>
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="flex justify-between items-center text-xs">
+                              <div>
+                                <p className="font-semibold text-[#1b1c1b]">{b.serviceName}</p>
+                                <p className="text-[10px] text-[#695c52]">{b.date} / {b.time}</p>
+                              </div>
+                              <button
+                                onClick={() => setConfirmingCancelId(b.id)}
+                                className="text-rose-500 hover:text-rose-700 text-[10px] underline font-semibold cursor-pointer"
+                              >
+                                취소
+                              </button>
+                            </div>
+                          )}
                         </div>
                       ))}
                     </div>

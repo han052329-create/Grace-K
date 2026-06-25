@@ -58,7 +58,7 @@ export const SERVICES: ServiceItem[] = [
     description: '각질과 노폐물을 딥클렌징하고, 두피 장벽을 강화하는 진정 에센스 케어와 시원한 마사지로 활력 있는 모발 생장 환경을 회복합니다.',
     price: 80000,
     duration: '1시간',
-    imageUrl: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&q=80&w=800',
+    imageUrl: 'https://postfiles.pstatic.net/MjAyNjA2MjVfMTM3/MDAxNzgyMzY0NTAwNzI2.uRxIbXjsOZFDQQOKvP2J5lM1visVlLSWxE79Uk_K1k4g.YdDF2hJ4XUxlUoU8h1uZ1AUw2t3SMx_sVD9H89ZtGdkg.PNG/333.png?type=w773',
   }
 ];
 

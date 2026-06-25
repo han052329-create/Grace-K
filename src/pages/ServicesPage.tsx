@@ -126,7 +126,7 @@ export default function ServicesPage({ handleOpenBooking }: ServicesPageProps) {
             </div>
             <div className="h-64 overflow-hidden">
               <img
-                src="https://postfiles.pstatic.net/MjAyNjA2MjVfMTk0/MDAxNzgyMzU5NjQ5NTg1.STqX2Rlg0CCq1Ecr2txkwJC9a1_Xe13ERqYLmP9fLXEg.zOTzM23E30gCVAe4Qve_OAkLMxvSOiYcguDMo6ynngcg.PNG/Gemini_Generated_Image_5cu3s5cu3s5cu3s5.png?type=w773"
+                src="https://postfiles.pstatic.net/MjAyNjA2MjVfMTM3/MDAxNzgyMzY0NTAwNzI2.uRxIbXjsOZFDQQOKvP2J5lM1visVlLSWxE79Uk_K1k4g.YdDF2hJ4XUxlUoU8h1uZ1AUw2t3SMx_sVD9H89ZtGdkg.PNG/333.png?type=w773"
                 alt="Scalp Care"
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                 referrerPolicy="no-referrer"
