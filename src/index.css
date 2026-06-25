@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Libre Caslon Text", Georgia, serif;
+  --font-sans: "Pretendard", "Manrope", ui-sans-serif, system-ui, sans-serif;
+  
+  --color-primary: #665d52;
+  --color-secondary: #695c52;
+  --color-background: #fcf9f7;
+  --color-on-background: #1b1c1b;
+  --color-surface: #fcf9f7;
+  --color-surface-dim: #dcd9d8;
+  --color-surface-container-low: #f6f3f1;
+  --color-surface-container: #f0edeb;
+  --color-surface-container-high: #eae8e6;
+  --color-surface-container-lowest: #ffffff;
+  --color-on-surface-variant: #4c463f;
+  --color-secondary-fixed: #f1dfd2;
+  --color-secondary-fixed-dim: #d5c3b7;
+  --color-on-secondary-fixed-variant: #50453b;
+  --color-outline-variant: #cfc5bb;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-on-background);
+  overflow-x: hidden;
+}
+
+.hero-gradient {
+  background: linear-gradient(to right, rgba(252, 249, 247, 0.7) 20%, rgba(252, 249, 247, 0.05) 100%);
+}
+
+@media (max-width: 768px) {
+  .hero-gradient {
+    background: linear-gradient(to top, rgba(252, 249, 247, 0.8) 25%, rgba(252, 249, 247, 0.1) 100%);
+  }
+}
+
+/* Custom scrollbar matching the theme */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #fcf9f7;
+}
+::-webkit-scrollbar-thumb {
+  background: #cfc5bb;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #695c52;
+}

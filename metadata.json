@@ -1,0 +1,6 @@
+{
+  "name": "Grace K",
+  "description": "당신만을 위한 1:1 프리미엄 헤어 살롱 그레이스K. 차분하고 고급스러운 공간에서 완성되는 맞춤형 헤어 솔루션과 최상의 케어를 제공합니다.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
